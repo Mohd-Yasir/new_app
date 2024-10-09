@@ -38,7 +38,6 @@ class ConversationPage extends StatelessWidget {
                           suffixIcon: Row(
                             mainAxisSize: MainAxisSize.min,
                             children: [
-                              //icons
                               IconButton(
                                   onPressed: () {},
                                   icon: const Icon(
