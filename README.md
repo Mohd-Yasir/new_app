@@ -13,7 +13,7 @@ This project is an **English Tutor App** that simulates a conversation between t
 
 ## Screenshots
 
-[Add screenshots of your app here to show the dashboard and conversation screens]
+[Uploading Soon]
 
 ## Getting Started
 
