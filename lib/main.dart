@@ -1,24 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:new_app/screens/conversation_page.dart';
-import 'package:new_app/screens/dashboard_page.dart';
+import 'view/dashboard_page.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(SiviApp());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
+class SiviApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
+      title: 'Sivi Tutor App',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
+        primarySwatch: Colors.blue,
       ),
-      home: ConversationPage(),
+      home: MainPage(),
     );
   }
 }
