@@ -13,7 +13,9 @@ This project is an **English Tutor App** that simulates a conversation between t
 
 ## Screenshots
 
-![task_screen](https://private-user-images.githubusercontent.com/119793604/375746660-c4abc507-8dea-4ae6-bd57-09c4d71e2aec.jpg?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3Mjg2NDg1NTcsIm5iZiI6MTcyODY0ODI1NywicGF0aCI6Ii8xMTk3OTM2MDQvMzc1NzQ2NjYwLWM0YWJjNTA3LThkZWEtNGFlNi1iZDU3LTA5YzRkNzFlMmFlYy5qcGc_WC1BbXotQWxnb3JpdGhtPUFXUzQtSE1BQy1TSEEyNTYmWC1BbXotQ3JlZGVudGlhbD1BS0lBVkNPRFlMU0E1M1BRSzRaQSUyRjIwMjQxMDExJTJGdXMtZWFzdC0xJTJGczMlMkZhd3M0X3JlcXVlc3QmWC1BbXotRGF0ZT0yMDI0MTAxMVQxMjA0MTdaJlgtQW16LUV4cGlyZXM9MzAwJlgtQW16LVNpZ25hdHVyZT1kZmQyZjg0ZWZhNDNiODcyOWVmMzA0NjQ5ZTI3NjE0N2Y1OTUwYTBjMzNmYzY0MDljYTA2MGEyOWNmZjllYzNmJlgtQW16LVNpZ25lZEhlYWRlcnM9aG9zdCJ9.K6QFUfFzdQyuTWYPo8nOigo1qqAaYBIU4754IFuvzh4)
+| Dashboard                        | Chat Screen Mic Off                                 |      Chat Screen Mic On                       | 
+|----------------------------------|-----------------------------------------------------|------------------------------------------------|
+| ![Dashboard](Screenshot/ss1.jpg) | [Chat Screen Mic Off](Screenshot/ss2withoutmic.jpg) | [Chat SCreen Mic On](Screenshot/ss3withmic.jpg) 
 
 ## Getting Started
 
