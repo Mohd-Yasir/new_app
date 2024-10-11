@@ -2,19 +2,21 @@ import 'package:flutter/material.dart';
 import 'view/dashboard_page.dart';
 
 void main() {
-  runApp(SiviApp());
+  runApp(const SiviApp());
 }
 
 class SiviApp extends StatelessWidget {
+  const SiviApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Sivi Tutor App',
+      title: 'Sivi Intern Assignment App',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: MainPage(),
+      home: const MainPage(),
     );
   }
 }

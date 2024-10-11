@@ -1,5 +1,3 @@
-// model/conversation_model.dart
-
 class Conversation {
   final String botMessage;
   final String humanMessage;

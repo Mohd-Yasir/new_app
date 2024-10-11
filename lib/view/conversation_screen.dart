@@ -1,12 +1,12 @@
-// view/conversation_screen.dart
-
-import 'dart:convert'; // Import for jsonDecode
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:speech_to_text/speech_to_text.dart' as stt;
 import '../controller/conversation_controller.dart';
-import 'package:http/http.dart' as http; // Import for HTTP requests
+import 'package:http/http.dart' as http;
 
 class ConversationScreen extends StatefulWidget {
+  const ConversationScreen({super.key});
+
   @override
   _ConversationScreenState createState() => _ConversationScreenState();
 }
@@ -14,10 +14,11 @@ class ConversationScreen extends StatefulWidget {
 class _ConversationScreenState extends State<ConversationScreen> {
   String writtenText = ''; // To store text input
   final ConversationController _controller = ConversationController();
-  stt.SpeechToText _speechToText = stt.SpeechToText();
-  bool _isListening = false; // Flag to check if mic is listening
-  String _userSpeech = ""; // To store recognized speech
+  final stt.SpeechToText _speechToText = stt.SpeechToText();
+  bool _isListening = false;
+  String _userSpeech = "";
   int _currentMessageIndex = 0; // To keep track of the conversation
+  int _attempts = 0; // To track the number of attempts
   bool _isLoading = true; // To show a loading state while fetching API data
   final TextEditingController messageTextController =
       TextEditingController(); // Controller for the TextField
@@ -32,7 +33,7 @@ class _ConversationScreenState extends State<ConversationScreen> {
 
   // Fetch conversations from API
   Future<void> _fetchConversations() async {
-    final String apiUrl =
+    const String apiUrl =
         'https://my-json-server.typicode.com/tryninjastudy/dummyapi/db'; // API URL
     try {
       final response = await http.get(Uri.parse(apiUrl));
@@ -68,7 +69,8 @@ class _ConversationScreenState extends State<ConversationScreen> {
       _controller.addConversation(
           message, ""); // Add bot message to conversation
     });
-    _scrollToBottom(); // Auto-scroll after adding a new message
+    // Scroll to bottom after UI is updated
+    WidgetsBinding.instance.addPostFrameCallback((_) => _scrollToBottom());
   }
 
   // Start listening to user's speech
@@ -108,44 +110,80 @@ class _ConversationScreenState extends State<ConversationScreen> {
     String expectedResponse =
         _controller.getExpectedResponse(_currentMessageIndex);
 
-    // Check if the user's response matches the expected response
-    if (userSpeech.toLowerCase() == expectedResponse.toLowerCase()) {
-      _currentMessageIndex++;
-      _sendBotMessage(_controller
-          .getNextBotMessage(_currentMessageIndex)); // Send next bot message
-    } else {
-      // Handle incorrect response
-      _controller.addConversation("Sorry, I didn't understand.", userSpeech);
-      setState(() {}); // Refresh UI to display new message
+    // Remove punctuation from both the user speech and expected response
+    String cleanedUserSpeech = _removePunctuation(userSpeech.toLowerCase());
+    String cleanedExpectedResponse =
+        _removePunctuation(expectedResponse.toLowerCase());
+    // Add the user's message to the conversation (correct or incorrect)
+    _controller.addConversation("", userSpeech); // Add user's input to chat
 
-      // Check if the user failed twice
-      if (_currentMessageIndex < _controller.getConversations().length - 1) {
-        // Show the correct response after two incorrect attempts
+    // Check if the user's response matches the expected response
+    if (cleanedUserSpeech == cleanedExpectedResponse) {
+      _currentMessageIndex++;
+      _attempts = 0; // Reset attempts after a correct answer
+
+      // Send the next bot message
+      _sendBotMessage(_controller.getNextBotMessage(_currentMessageIndex));
+
+      setState(() {
+        // UI will be updated to show both user's correct input and bot's next message
+      });
+    } else {
+      // Increment attempts count for incorrect answers
+      _attempts++;
+      // Add incorrect response to conversation history
+      if (_attempts == 1 && userSpeech.isNotEmpty) {
+        _controller.addConversation(
+            "Sorry, I didn't understand: $userSpeech", "");
+      }
+
+      if (_attempts == 2 && userSpeech.isNotEmpty) {
+        // First incorrect attempt: show the correct response
         _controller.addConversation(
             "The correct response was: $expectedResponse", "");
-        setState(() {});
+
+        setState(() {
+          // UI updated to show correct response
+        });
+      } else if (_attempts == 3 && userSpeech.isNotEmpty) {
+        _currentMessageIndex++;
+        _attempts = 0; // Reset attempts after skipping
+
+        _sendBotMessage(_controller.getNextBotMessage(_currentMessageIndex));
+
+        setState(() {
+          // UI updated to reflect the skipped message and bot's next message
+        });
       }
     }
-    _scrollToBottom(); // Scroll to bottom after processing
+    // Scroll to bottom after UI is updated
+    WidgetsBinding.instance.addPostFrameCallback((_) => _scrollToBottom());
   }
 
   // Auto-scroll to the bottom of the ListView
   void _scrollToBottom() {
-    _scrollController.animateTo(
-      _scrollController.position.maxScrollExtent,
-      duration: Duration(milliseconds: 300),
-      curve: Curves.easeOut,
-    );
+    if (_scrollController.hasClients) {
+      _scrollController.animateTo(
+        _scrollController.position.maxScrollExtent,
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.easeOut,
+      );
+    }
+  }
+
+  String _removePunctuation(String text) {
+    // Use RegExp to remove punctuation
+    return text.replaceAll(RegExp(r'[^\w\s]'), '');
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Conversation with Bot')),
+      appBar: AppBar(title: const Text('Conversation with Bot')),
       body: Column(
         children: [
           _isLoading
-              ? Center(
+              ? const Center(
                   child:
                       CircularProgressIndicator()) // Show loading indicator while data is being fetched
               : Expanded(
@@ -162,7 +200,7 @@ class _ConversationScreenState extends State<ConversationScreen> {
                               ? Alignment.centerLeft
                               : Alignment.centerRight,
                           child: Container(
-                            padding: EdgeInsets.all(10),
+                            padding: const EdgeInsets.all(10),
                             decoration: BoxDecoration(
                               color: conversation.humanMessage.isEmpty
                                   ? Colors.grey[300]
@@ -171,9 +209,9 @@ class _ConversationScreenState extends State<ConversationScreen> {
                             ),
                             child: Text(
                               conversation.humanMessage.isEmpty
-                                  ? "Bot: ${conversation.botMessage}"
-                                  : "You: ${conversation.humanMessage}",
-                              style: TextStyle(fontSize: 16),
+                                  ? " ${conversation.botMessage}"
+                                  : " ${conversation.humanMessage}",
+                              style: const TextStyle(fontSize: 16),
                             ),
                           ),
                         ),
@@ -189,7 +227,7 @@ class _ConversationScreenState extends State<ConversationScreen> {
                   child: TextField(
                     controller:
                         messageTextController, // Attach controller to TextField
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       hintText: 'Type your response here...',
                     ),
                     onChanged: (value) {
@@ -205,7 +243,7 @@ class _ConversationScreenState extends State<ConversationScreen> {
                       : _startListening, // Handle mic button press
                 ),
                 IconButton(
-                    icon: Icon(Icons.send),
+                    icon: const Icon(Icons.send),
                     onPressed: () {
                       if (writtenText.isNotEmpty) {
                         setState(() {

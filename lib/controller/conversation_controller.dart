@@ -1,4 +1,3 @@
-
 import '../model/conversation_model.dart';
 
 class ConversationController {

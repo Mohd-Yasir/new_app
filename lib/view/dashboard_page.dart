@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
-import 'conversatoin_screen.dart';
+import 'conversation_screen.dart';
 
 class MainPage extends StatelessWidget {
+  const MainPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Sivi Inter Assignment'),
+        title: const Text('Sivi Intern Assignment'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -24,18 +26,19 @@ class MainPage extends StatelessWidget {
                 child: Center(
                   child: CircleAvatar(
                     backgroundColor: Colors.white,
-                    child: Icon(Icons.chat, color: Colors.deepPurple[300]),
                     radius: 20.0,
+                    child: Icon(Icons.chat, color: Colors.deepPurple[300]),
                   ),
                 ),
               ),
-              title: Text("Chat 1", style: TextStyle(fontSize: 18)),
-              subtitle: Text("Start chatting with the bot"),
+              title: const Text("Chat 1", style: TextStyle(fontSize: 18)),
+              subtitle: const Text("Start chatting with the bot"),
               onTap: () {
                 // Navigate to conversation screen
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => ConversationScreen()),
+                  MaterialPageRoute(
+                      builder: (context) => const ConversationScreen()),
                 );
               },
             ),
@@ -46,12 +49,11 @@ class MainPage extends StatelessWidget {
         onPressed: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => ConversationScreen()),
+            MaterialPageRoute(builder: (context) => const ConversationScreen()),
           );
-          // You can implement other chat options or functionality here
         },
-        child: Icon(Icons.add),
         tooltip: 'Add new chat',
+        child: const Icon(Icons.add),
       ),
     );
   }
