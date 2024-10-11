@@ -15,7 +15,7 @@ This project is an **English Tutor App** that simulates a conversation between t
 
 | Dashboard                        | Chat Screen Mic Off                                 |      Chat Screen Mic On                       | 
 |----------------------------------|-----------------------------------------------------|------------------------------------------------|
-| ![Dashboard](Screenshot/ss1.jpg) | [Chat Screen Mic Off](Screenshot/ss2withoutmic.jpg) | [Chat SCreen Mic On](Screenshot/ss3withmic.jpg) 
+| ![Dashboard](Screenshot/ss1.jpg) | ![Chat Screen Mic Off](Screenshot/ss2withoutmic.jpg) | ![Chat Screen Mic On](Screenshot/ss3withmic.jpg) 
 
 ## Getting Started
 
