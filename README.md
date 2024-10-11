@@ -2,6 +2,8 @@
 
 This project is an **English Tutor App** that simulates a conversation between the user and a bot, allowing users to practice spoken English. The app uses **speech-to-text** functionality to capture user input and provides real-time feedback based on predefined conversations fetched from an API. The app also supports text-based input and is designed for a smooth and responsive user experience.
 
+[Download the latest APK](https://github.com/yourusername/repositoryname/blob/main/release-apk/app-release.apk?raw=true)
+
 ## Features
 
 - **Speech-to-Text Integration**: Users can interact with the bot via voice commands using the device's microphone.
